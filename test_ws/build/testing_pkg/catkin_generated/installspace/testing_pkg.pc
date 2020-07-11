@@ -1,0 +1,8 @@
+prefix=/home/liminghui/test_ws/install
+
+Name: testing_pkg
+Description: Description of testing_pkg
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/liminghui/test_ws/install/lib 
+Requires: 

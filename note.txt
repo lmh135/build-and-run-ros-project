@@ -1,0 +1,44 @@
+ctrl+h .bashrc最后一行加上： source /home/liminghui/test_ws/devel/setup.bash
+
+
+建立ROS工程：
+mkdir -p catkin_ws/src 
+cd catkin_ws/
+catkin_make
+source devel/setup.bash
+cd src/
+catkin_create_pkg testing_pkg roscpp rospy std_msgs
+cd testing_pkg/src/
+gedit talker.cpp
+gedit listener.cpp
+修改testing_pkg/下的CMakeLists.txt文件
+将# add_executable(${PROJECT_NAME}_node src/testing_pkg_node.cpp)
+改成 add_executable(talker src/talker.cpp)
+add_executable(listener src/listener.cpp)
+将# target_link_libraries(${PROJECT_NAME}_node
+#   ${catkin_LIBRARIES}
+# )
+改成
+target_link_libraries(talker
+   ${catkin_LIBRARIES}
+ )
+target_link_libraries(listener
+   ${catkin_LIBRARIES}
+ )
+catkin_make
+source devel/setup.bash
+roscore
+rosrun testing_pkg talker
+rosrun testing_pkg listener
+
+roslaunch:
+cd catkin_ws/src/testing_pkg/
+mkdir -p launch
+cd launcd
+gedit testing_pkg.launch
+<launch> 
+<node pkg="testing_pkg" type="talker" name="talker" output="screen"/> <node pkg="testing_pkg" type="listener" name="listener" output="screen"/> 
+</launch>
+catkin_make
+roslaunch testing_pkg testing_pkg.launch 
+
